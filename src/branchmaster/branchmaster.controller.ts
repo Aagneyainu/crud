@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { BranchmasterService } from './branchmaster.service';
 import { CreateBranchmasterDto } from './dto/create-branchmaster.dto';
 import { UpdateBranchmasterDto } from './dto/update-branchmaster.dto';
@@ -12,18 +20,26 @@ export class BranchmasterController {
     return this.branchmasterService.create(createBranchmasterDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.branchmasterService.findAll();
   }
 
-  @Get(':id')
+  @Get('getone/:id')
   findOne(@Param('id') id: string) {
-    return this.branchmasterService.findOne(+id);
+    console.log('IDDDD', id);
+    return this.branchmasterService.findOne({
+      where: {
+        br_code: id,
+      },
+    });
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBranchmasterDto: UpdateBranchmasterDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateBranchmasterDto: UpdateBranchmasterDto,
+  ) {
     return this.branchmasterService.update(+id, updateBranchmasterDto);
   }
 

@@ -1,19 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBranchmasterDto } from './dto/create-branchmaster.dto';
 import { UpdateBranchmasterDto } from './dto/update-branchmaster.dto';
+import {  branchmas } from './entities/branchmaster.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class BranchmasterService {
+
+  constructor(@InjectRepository(branchmas) private usersRepository: Repository<branchmas>) { }
+
   create(createBranchmasterDto: CreateBranchmasterDto) {
     return 'This action adds a new branchmaster';
   }
 
-  findAll() {
-    return `This action returns all branchmaster`;
+ async findAll() {
+    return await this.usersRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} branchmaster`;
+ async findOne(id: any) {
+   return await this.usersRepository.findOne(id)
   }
 
   update(id: number, updateBranchmasterDto: UpdateBranchmasterDto) {
